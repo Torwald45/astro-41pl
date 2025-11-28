@@ -6,7 +6,7 @@ import Sidebar from "../components/Sidebar.astro";
 <html lang="pl">
   <Header 
     title="Formularz wyceny | 41.pl" 
-    description="Wyslij zapytanie o wycene projektu. Administracja serwerow, tworzenie stron, programowanie. Odpowiadamy w ciagu 24 godzin."
+    description="Wyślij zapytanie o wycenę projektu. Administracja serwerów, tworzenie stron, programowanie. Odpowiadamy w ciągu 24 godzin."
   />
   <body>
     <div class="content">
@@ -16,20 +16,20 @@ import Sidebar from "../components/Sidebar.astro";
           <div class="back-nav-container">
             <a href="/" class="back-nav-button w-inline-block">
               <img src="/assets/back.svg" loading="lazy" alt="" class="back-nav-img" />
-              <div>Powrot</div>
+              <div>Powrót</div>
             </a>
           </div>
           <div class="content-container">
             <h1>Formularz wyceny</h1>
             
             <p class="lead">
-              Opisz swoj projekt lub potrzeby. Odpowiadamy w ciagu 24 godzin.
+              Opisz swój projekt lub potrzeby. Odpowiadamy w ciągu 24 godzin.
             </p>
             
             <div id="form-container">
               <form id="wycena-form" class="form-wycena">
                 <div class="form-group">
-                  <label for="nazwa" class="form-label">Imie lub nazwa firmy</label>
+                  <label for="nazwa" class="form-label">Imię lub nazwa firmy</label>
                   <input type="text" id="nazwa" name="nazwa" required class="form-input" placeholder="Jan Kowalski" />
                 </div>
                 
@@ -43,20 +43,20 @@ import Sidebar from "../components/Sidebar.astro";
                   <textarea id="opis" name="opis" required class="form-textarea" rows="6" placeholder="Opisz czego potrzebujesz..."></textarea>
                 </div>
                 
-                <button type="submit" id="submit-btn" class="button form-button">Wyslij zapytanie</button>
+                <button type="submit" id="submit-btn" class="button form-button">Wyślij zapytanie</button>
               </form>
             </div>
             
             <div id="form-success" class="form-message form-success" style="display: none;">
-              <h3>Dziekujemy!</h3>
-              <p class="lead">Twoje zgloszenie zostalo wyslane. Odpowiemy w ciagu 24 godzin.</p>
-              <p class="lead">Potwierdzenie zostalo wyslane na podany adres email.</p>
+              <h3>Dziękujemy!</h3>
+              <p class="lead">Twoje zgłoszenie zostało wysłane. Odpowiemy w ciągu 24 godzin.</p>
+              <p class="lead">Potwierdzenie zostało wysłane na podany adres email.</p>
             </div>
             
             <div id="form-error" class="form-message form-error" style="display: none;">
-              <h3>Wystapil blad</h3>
-              <p class="lead" id="error-message">Sprobuj ponownie pozniej.</p>
-              <button onclick="location.reload()" class="button form-button">Sprobuj ponownie</button>
+              <h3>Wystąpił błąd</h3>
+              <p class="lead" id="error-message">Spróbuj ponownie później.</p>
+              <button onclick="location.reload()" class="button form-button">Spróbuj ponownie</button>
             </div>
             
           </div>
@@ -179,7 +179,7 @@ import Sidebar from "../components/Sidebar.astro";
         const errorText = document.getElementById('error-message');
         
         btn.disabled = true;
-        btn.textContent = 'Wysylanie...';
+        btn.textContent = 'Wysyłanie...';
         
         const data = {
           nazwa: document.getElementById('nazwa').value,
@@ -204,12 +204,12 @@ import Sidebar from "../components/Sidebar.astro";
             successMsg.style.display = 'block';
           } else {
             formContainer.style.display = 'none';
-            errorText.textContent = result.error || 'Wystapil nieoczekiwany blad.';
+            errorText.textContent = result.error || 'Wystąpił nieoczekiwany błąd.';
             errorMsg.style.display = 'block';
           }
         } catch (err) {
           formContainer.style.display = 'none';
-          errorText.textContent = 'Blad polaczenia. Sprawdz internet i sprobuj ponownie.';
+          errorText.textContent = 'Błąd połączenia. Sprawdź internet i spróbuj ponownie.';
           errorMsg.style.display = 'block';
         }
       });
