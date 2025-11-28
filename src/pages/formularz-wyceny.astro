@@ -47,9 +47,9 @@ import Sidebar from "../components/Sidebar.astro";
                 </div>
                 
                 <div class="form-group">
-                  <label for="pliki" class="form-label">Załączniki (opcjonalnie)</label>
-                  <input type="file" id="pliki" name="pliki" multiple class="form-file" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.gif,.webp,.zip,.rar,.txt" />
-                  <div class="file-hint">Max 3 pliki, do 10 MB każdy. PDF, DOC, XLS, JPG, PNG, ZIP.</div>
+                  <label for="plik" class="form-label">Załącznik (opcjonalnie, max 10 MB)</label>
+                  <input type="file" id="plik" name="plik" class="form-file" accept=".pdf,.doc,.docx,.xls,.xlsx,.odt,.ods,.odp,.odg,.jpg,.jpeg,.png,.gif,.webp,.zip,.rar,.txt,.md" />
+                  <div class="file-hint">Dozwolone formaty: PDF, DOC, XLS, ODT, ODS, JPG, PNG, ZIP, MD i inne.</div>
                   <div id="file-list" class="file-list"></div>
                 </div>
                 
@@ -287,8 +287,8 @@ import Sidebar from "../components/Sidebar.astro";
         }
       });
       
-      // Wyswietlanie wybranych plikow
-      const fileInput = document.getElementById('pliki');
+      // Wyswietlanie wybranego pliku
+      const fileInput = document.getElementById('plik');
       const fileList = document.getElementById('file-list');
       
       function formatFileSize(bytes) {
@@ -300,25 +300,20 @@ import Sidebar from "../components/Sidebar.astro";
       fileInput.addEventListener('change', function() {
         fileList.innerHTML = '';
         
-        if (this.files.length > 3) {
-          alert('Maksymalnie 3 pliki');
+        if (this.files.length === 0) return;
+        
+        const file = this.files[0];
+        
+        if (file.size > 10 * 1024 * 1024) {
+          alert('Plik "' + file.name + '" przekracza limit 10 MB');
           this.value = '';
           return;
         }
         
-        for (const file of this.files) {
-          if (file.size > 10 * 1024 * 1024) {
-            alert('Plik "' + file.name + '" przekracza limit 10 MB');
-            this.value = '';
-            fileList.innerHTML = '';
-            return;
-          }
-          
-          const item = document.createElement('div');
-          item.className = 'file-item';
-          item.innerHTML = '<span class="file-item-name">' + file.name + '</span><span class="file-item-size">' + formatFileSize(file.size) + '</span>';
-          fileList.appendChild(item);
-        }
+        const item = document.createElement('div');
+        item.className = 'file-item';
+        item.innerHTML = '<span class="file-item-name">' + file.name + '</span><span class="file-item-size">' + formatFileSize(file.size) + '</span>';
+        fileList.appendChild(item);
       });
       
       // Wysylka formularza
@@ -346,9 +341,9 @@ import Sidebar from "../components/Sidebar.astro";
         formData.append('email', document.getElementById('email').value);
         formData.append('opis', document.getElementById('opis').value);
         
-        const files = document.getElementById('pliki').files;
-        for (let i = 0; i < files.length; i++) {
-          formData.append('pliki[]', files[i]);
+        const fileField = document.getElementById('plik');
+        if (fileField.files.length > 0) {
+          formData.append('plik', fileField.files[0]);
         }
         
         try {
